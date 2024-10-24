@@ -1,3 +1,65 @@
+
+CREATE TABLE campus (
+   id_campus serial PRIMARY KEY,
+   ubicacion varchar (100) NOT NULL
+);
+
+CREATE TABLE promociones (
+    id_promocion serial PRIMARY KEY,
+    nombre varchar (50) NOT NULL,
+    full_part_time varchar (50) NOT NULL,
+    fecha_inicio DATE (50) NOT NULL,
+    fecha_final DATE (50) NOT NULL,
+    id_campus int
+);
+
+CREATE TABLE profesores (
+    id_profesor serial PRIMARY KEY,
+    nombre varchar (50) NOT NULL,
+    apellido varchar (50) NOT NULL,
+    edad int NOT NULL,
+    pronombre varchar (20) NOT NULL,
+    email varchar (50) NOT NULL UNIQUE,
+    id_curso int,
+    id_campus int
+);
+
+CREATE TABLE cursos (
+    id_curso serial PRIMARY KEY,
+    materia varchar (50) NOT NULL,
+    aula varchar (50) NOT NULL,
+    presencial_online varchar (50) NOT NULL,
+    id_profesor int,
+    id_promocion int
+);
+
+CREATE TABLE estudiantes (
+    id_estudiante serial PRIMARY KEY,
+    nombre varchar (50) NOT NULL,
+    apellido varchar (50) NOT NULL,
+    edad int NOT NULL,
+    pronombre varchar (20) NOT NULL,
+    email varchar (50) NOT NULL UNIQUE,
+    id_curso int
+);
+
+CREATE TABLE proyectos (
+    id_proyecto serial PRIMARY KEY,
+    nombre varchar (50) NOT NULL,
+    id_calificacion int,
+    id_curso int
+);
+
+CREATE TABLE calificaciones (
+    id_calificacion serial PRIMARY KEY,
+    calificacion varchar (50) NOT NULL,
+    id_estudiante int,
+    id_proyecto int,
+    CONSTRAINT unique_proyecto_estudiante
+    UNIQUE (id_proyecto, id_estudiante) 
+);
+
+
 ALTER TABLE campus
 --ADD CONSTRAINT id_promocion
 ADD FOREIGN KEY (id_promocion) REFERENCES promociones(id_promocion),
