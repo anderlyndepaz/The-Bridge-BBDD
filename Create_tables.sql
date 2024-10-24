@@ -8,8 +8,8 @@ CREATE TABLE promociones (
     id_promocion serial PRIMARY KEY,
     nombre varchar (50) NOT NULL,
     full_part_time varchar (50) NOT NULL,
-    fecha_inicio DATE (50) NOT NULL,
-    fecha_final DATE (50) NOT NULL,
+    fecha_inicio DATE NOT NULL,
+    fecha_final DATE NOT NULL,
     id_campus int
 );
 
@@ -60,21 +60,23 @@ CREATE TABLE calificaciones (
 );
 
 
-ALTER TABLE campus
---ADD CONSTRAINT id_promocion
-ADD FOREIGN KEY (id_promocion) REFERENCES promociones(id_promocion),
-ADD FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor);
 
 ALTER TABLE profesores
-ADD FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
 ADD FOREIGN KEY (id_campus) REFERENCES campus(id_campus);
 
 ALTER TABLE promociones
-ADD FOREIGN KEY (id_curso) REFERENCES cursos(id_curso),
 ADD FOREIGN KEY (id_campus) REFERENCES campus(id_campus);
 
 ALTER TABLE cursos
-ADD FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante),
 ADD FOREIGN KEY (id_profesor) REFERENCES profesores(id_profesor),
-ADD FOREIGN KEY (id_proyecto) REFERENCES proyectos(id_proyecto),
 ADD FOREIGN KEY (id_promocion) REFERENCES promociones(id_promocion);
+
+ALTER TABLE proyectos
+ADD FOREIGN KEY (id_curso) REFERENCES cursos(id_curso);
+
+ALTER TABLE estudiantes
+ADD FOREIGN KEY (id_curso) REFERENCES cursos(id_curso);
+
+ALTER TABLE calificaciones
+ADD FOREIGN KEY (id_proyecto) REFERENCES proyectos(id_proyecto),
+ADD FOREIGN KEY (id_estudiante) REFERENCES estudiantes(id_estudiante);
